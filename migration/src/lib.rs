@@ -10,3 +10,8 @@ impl MigratorTrait for Migrator {
         vec![Box::new(m20250407_051016_create_users::Migration)]
     }
 }
+
+#[async_std::main]
+pub async fn main() {
+    cli::run_cli(Migrator).await;
+}
