@@ -1,8 +1,5 @@
 use entity::users::*;
-use sea_orm_migration::{
-    prelude::*,
-    sea_orm::{DbBackend, Schema},
-};
+use sea_orm_migration::{prelude::*, schema::*};
 
 #[derive(DeriveMigrationName)]
 pub struct Migration;
@@ -11,7 +8,16 @@ pub struct Migration;
 impl MigrationTrait for Migration {
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
-            .create_table(Schema::new(DbBackend::MySql).create_table_from_entity(Entity))
+            .create_table(
+                Table::create()
+                    .table(Entity)
+                    .if_not_exists()
+                    .col(pk_auto(Column::Id).big_integer().unsigned())
+                    .col(string(Column::Email).string_len(320).unique_key())
+                    .col(string(Column::KeycloakSub).char_len(36).unique_key())
+                    .col(date_time(Column::CreatedAt).default(Expr::current_timestamp()))
+                    .to_owned(),
+            )
             .await
     }
 
