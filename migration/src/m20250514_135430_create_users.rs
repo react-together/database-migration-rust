@@ -1,4 +1,4 @@
-use entity::users::Entity;
+use entity::users::*;
 use sea_orm_migration::{
     prelude::*,
     sea_orm::{DbBackend, Schema},
