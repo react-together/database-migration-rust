@@ -12,7 +12,7 @@ impl MigrationTrait for Migration {
                 Table::create()
                     .table(Entity)
                     .if_not_exists()
-                    .col(pk_auto(Column::Id).big_integer().unsigned())
+                    .col(pk_auto(Column::Id).big_unsigned())
                     .col(date_time(Column::CreatedAt).default(Expr::current_timestamp()))
                     .col(
                         date_time(Column::UpdatedAt)
