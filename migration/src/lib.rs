@@ -4,6 +4,7 @@ mod m20250514_135430_create_users;
 mod m20250515_160120_create_photos;
 mod m20250515_160714_create_photo_reactions;
 mod m20250517_080512_create_tags;
+mod m20250517_080513_create_photo_tags;
 
 pub struct Migrator;
 
@@ -15,6 +16,7 @@ impl MigratorTrait for Migrator {
             Box::new(m20250515_160120_create_photos::Migration),
             Box::new(m20250515_160714_create_photo_reactions::Migration),
             Box::new(m20250517_080512_create_tags::Migration),
+            Box::new(m20250517_080513_create_photo_tags::Migration),
         ]
     }
 }

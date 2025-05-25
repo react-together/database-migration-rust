@@ -11,7 +11,7 @@ pub enum TagType {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Serialize, Deserialize)]
-#[sea_orm(table_name = "users")]
+#[sea_orm(table_name = "tags")]
 pub struct Model {
     #[sea_orm(primary_key)]
     pub id: u64,
@@ -22,6 +22,25 @@ pub struct Model {
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
-pub enum Relation {}
+pub enum Relation {
+    #[sea_orm(has_many = "super::photo_tags::Entity")]
+    PhotoTags,
+}
+
+impl Related<super::photo_tags::Entity> for Entity {
+    fn to() -> RelationDef {
+        Relation::PhotoTags.def()
+    }
+}
+
+impl Related<super::photos::Entity> for Entity {
+    fn to() -> RelationDef {
+        super::photo_tags::Relation::Photo.def()
+    }
+
+    fn via() -> Option<RelationDef> {
+        Some(super::photo_tags::Relation::Tag.def().rev())
+    }
+}
 
 impl ActiveModelBehavior for ActiveModel {}
