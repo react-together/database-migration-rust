@@ -17,7 +17,7 @@ impl MigrationTrait for Migration {
                     .foreign_key(
                         ForeignKey::create()
                             .from(Entity, Column::ParentId)
-                            .to(directories::Entity, directories::Column::Id)
+                            .to(Entity, Column::Id)
                             .on_delete(ForeignKeyAction::Cascade)
                             .on_update(ForeignKeyAction::Cascade),
                     )

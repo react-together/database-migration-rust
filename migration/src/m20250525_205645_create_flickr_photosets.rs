@@ -12,7 +12,8 @@ impl MigrationTrait for Migration {
                 Table::create()
                     .table(Entity)
                     .if_not_exists()
-                    .primary_key(Index::create().col(big_unsigned(Column::FlickrId))
+                    .col(big_integer(Column::FlickrId).not_null())
+                    .primary_key(Index::create().col(Column::FlickrId))
                     .col(big_unsigned(Column::UserId).not_null())
                     .foreign_key(
                         ForeignKey::create()
