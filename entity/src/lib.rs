@@ -1,8 +1,8 @@
 pub mod directories;
-pub mod filckr_photo_sizes;
-pub mod filckr_photos;
-pub mod filckr_photosets;
+pub mod flickr_photo_sizes;
+pub mod flickr_photos;
 pub mod flickr_photoset_tags;
+pub mod flickr_photosets;
 pub mod photo_files;
 pub mod photo_reactions;
 pub mod photo_tags;
