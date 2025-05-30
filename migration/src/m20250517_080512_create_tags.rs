@@ -1,3 +1,4 @@
+use entity::sea_orm_active_enums::TagType;
 use entity::tags::*;
 use sea_orm_migration::{prelude::*, schema::*, sea_orm::Iterable};
 

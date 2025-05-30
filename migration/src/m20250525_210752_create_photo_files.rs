@@ -36,6 +36,7 @@ impl MigrationTrait for Migration {
                             .default(Expr::current_timestamp())
                             .extra("on update CURRENT_TIMESTAMP"),
                     )
+                    .primary_key(Index::create().col(Column::DirectoryId).col(Column::Integrity))
                     .to_owned(),
             )
             .await
