@@ -22,7 +22,7 @@ impl MigrationTrait for Migration {
                             .on_update(ForeignKeyAction::Cascade),
                     )
                     .col(string(Column::Name).string_len(256))
-                    .col(string(Column::Path).string_len(256))
+                    .col(string(Column::Path).string_len(4096))
                     .to_owned(),
             )
             .await
