@@ -13,7 +13,7 @@ impl MigrationTrait for Migration {
                     .table(Entity)
                     .if_not_exists()
                     .col(pk_auto(Column::Id).big_unsigned())
-                    .col(big_unsigned(Column::ParentId).not_null())
+                    .col(big_unsigned(Column::ParentId))
                     .foreign_key(
                         ForeignKey::create()
                             .from(Entity, Column::ParentId)
