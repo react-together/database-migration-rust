@@ -1,7 +1,9 @@
 use sea_orm::entity::prelude::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Serialize, Deserialize, DeriveActiveEnum, EnumIter, PartialEq, Eq)]
+#[derive(
+    Clone, Debug, Serialize, Deserialize, DeriveActiveEnum, DeriveIden, EnumIter, PartialEq, Eq,
+)]
 #[sea_orm(rs_type = "String", db_type = "Enum", enum_name = "tag_type")]
 pub enum TagType {
     #[sea_orm(string_value = "Category")]

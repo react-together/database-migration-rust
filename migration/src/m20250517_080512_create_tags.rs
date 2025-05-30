@@ -1,5 +1,5 @@
 use entity::tags::*;
-use sea_orm_migration::{prelude::*, schema::*};
+use sea_orm_migration::{prelude::*, schema::*, sea_orm::Iterable};
 
 #[derive(DeriveMigrationName)]
 pub struct Migration;
@@ -14,6 +14,13 @@ impl MigrationTrait for Migration {
                     .if_not_exists()
                     .col(pk_auto(Column::Id).big_unsigned())
                     .col(string(Column::Name).not_null().unique_key().string_len(15))
+                    .col(string(Column::Description).string_len(256))
+                    .col(string(Column::Note).string_len(256))
+                    .col(enumeration(
+                        Column::TagType,
+                        Alias::new("tag_type"),
+                        TagType::iter(),
+                    ))
                     .to_owned(),
             )
             .await
