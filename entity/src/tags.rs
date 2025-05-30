@@ -2,8 +2,9 @@
 
 use super::sea_orm_active_enums::TagType;
 use sea_orm::entity::prelude::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
+#[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq, Deserialize, Serialize)]
 #[sea_orm(table_name = "tags")]
 pub struct Model {
     #[sea_orm(primary_key)]
