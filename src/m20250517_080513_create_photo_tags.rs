@@ -1,8 +1,16 @@
-use entity::{photo_tags::*, photos, tags};
 use sea_orm_migration::{prelude::*, schema::*};
+
+use crate::{m20250515_160120_create_photos::Photo, m20250517_080512_create_tags::Tag};
 
 #[derive(DeriveMigrationName)]
 pub struct Migration;
+
+#[derive(DeriveIden)]
+pub enum PhotoTag {
+    Table,
+    PhotoId,
+    TagId,
+}
 
 #[async_trait::async_trait]
 impl MigrationTrait for Migration {
@@ -10,25 +18,25 @@ impl MigrationTrait for Migration {
         manager
             .create_table(
                 Table::create()
-                    .table(Entity)
+                    .table(PhotoTag::Table)
                     .if_not_exists()
-                    .col(big_unsigned(Column::PhotoId).not_null())
+                    .col(big_unsigned(PhotoTag::PhotoId).not_null())
                     .foreign_key(
                         ForeignKey::create()
-                            .from(Entity, Column::PhotoId)
-                            .to(photos::Entity, photos::Column::Id)
+                            .from(PhotoTag::Table, PhotoTag::PhotoId)
+                            .to(Photo::Table, Photo::Id)
                             .on_delete(ForeignKeyAction::Cascade)
                             .on_update(ForeignKeyAction::Cascade),
                     )
-                    .col(big_unsigned(Column::TagId).not_null())
+                    .col(big_unsigned(PhotoTag::TagId).not_null())
                     .foreign_key(
                         ForeignKey::create()
-                            .from(Entity, Column::TagId)
-                            .to(tags::Entity, tags::Column::Id)
+                            .from(PhotoTag::Table, PhotoTag::TagId)
+                            .to(Tag::Table, Tag::Id)
                             .on_delete(ForeignKeyAction::Cascade)
                             .on_update(ForeignKeyAction::Cascade),
                     )
-                    .primary_key(Index::create().col(Column::PhotoId).col(Column::TagId))
+                    .primary_key(Index::create().col(PhotoTag::PhotoId).col(PhotoTag::TagId))
                     .to_owned(),
             )
             .await
@@ -36,7 +44,7 @@ impl MigrationTrait for Migration {
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
-            .drop_table(Table::drop().table(Entity).to_owned())
+            .drop_table(Table::drop().table(PhotoTag::Table).to_owned())
             .await
     }
 }

@@ -1,8 +1,15 @@
-use entity::photos::*;
 use sea_orm_migration::{prelude::*, schema::*};
 
 #[derive(DeriveMigrationName)]
 pub struct Migration;
+
+#[derive(DeriveIden)]
+pub enum Photo {
+    Table,
+    Id,
+    CreatedAt,
+    UpdatedAt,
+}
 
 #[async_trait::async_trait]
 impl MigrationTrait for Migration {
@@ -10,12 +17,12 @@ impl MigrationTrait for Migration {
         manager
             .create_table(
                 Table::create()
-                    .table(Entity)
+                    .table(Photo::Table)
                     .if_not_exists()
-                    .col(pk_auto(Column::Id).big_unsigned())
-                    .col(date_time(Column::CreatedAt).default(Expr::current_timestamp()))
+                    .col(pk_auto(Photo::Id).big_unsigned())
+                    .col(date_time(Photo::CreatedAt).default(Expr::current_timestamp()))
                     .col(
-                        date_time(Column::UpdatedAt)
+                        date_time(Photo::UpdatedAt)
                             .default(Expr::current_timestamp())
                             .extra("on update CURRENT_TIMESTAMP"),
                     )
@@ -26,7 +33,7 @@ impl MigrationTrait for Migration {
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
-            .drop_table(Table::drop().table(Entity.into_table_ref()).to_owned())
+            .drop_table(Table::drop().table(Photo::Table).to_owned())
             .await
     }
 }
