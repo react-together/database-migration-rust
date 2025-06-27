@@ -27,7 +27,6 @@ impl MigrationTrait for Migration {
                     .table(FlickrPhotoSize::Table)
                     .if_not_exists()
                     .col(big_unsigned(FlickrPhotoSize::FlickrPhotoId).not_null())
-                    .primary_key(Index::create().col(FlickrPhotoSize::FlickrPhotoId))
                     .foreign_key(
                         ForeignKey::create()
                             .from(FlickrPhotoSize::Table, FlickrPhotoSize::FlickrPhotoId)
@@ -45,6 +44,11 @@ impl MigrationTrait for Migration {
                         date_time(FlickrPhotoSize::UpdatedAt)
                             .default(Expr::current_timestamp())
                             .extra("on update CURRENT_TIMESTAMP"),
+                    )
+                    .primary_key(
+                        Index::create()
+                            .col(FlickrPhotoSize::FlickrPhotoId)
+                            .col(FlickrPhotoSize::Suffix),
                     )
                     .to_owned(),
             )
